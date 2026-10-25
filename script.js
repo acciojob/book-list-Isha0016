@@ -3,41 +3,38 @@ document.getElementById('submit').addEventListener('click', function(e) {
   e.preventDefault();
 
   // Get input values
-  const title = document.getElementById('title').value;
-  const author = document.getElementById('author').value;
-  const isbn = document.getElementById('isbn').value;
+  const title = document.getElementById('title').value.trim();
+  const author = document.getElementById('author').value.trim();
+  const isbn = document.getElementById('isbn').value.trim();
 
   // Validate inputs
   if (title === '' || author === '' || isbn === '') {
-    alert('Please fill in all fields');
     return;
   }
 
-  // Create a new table row element
+  // Create a new table row
   const list = document.getElementById('book-list');
   const row = document.createElement('tr');
 
-  // Insert columns and the delete button with class="delete"
   row.innerHTML = `
     <td>${title}</td>
     <td>${author}</td>
     <td>${isbn}</td>
-    <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+    <td><button class="delete btn btn-danger btn-sm">Clear</button></td>
   `;
 
-  // Append the row to the table body
+  // Append row to the table body
   list.appendChild(row);
 
-  // Clear input fields after submission
+  // Clear input fields
   document.getElementById('title').value = '';
   document.getElementById('author').value = '';
   document.getElementById('isbn').value = '';
 });
 
-// Event listener for deleting a row
+// Event delegation to delete the row when the clear/delete button is clicked
 document.getElementById('book-list').addEventListener('click', function(e) {
-  e.preventDefault();
   if (e.target.classList.contains('delete')) {
-    e.target.parentElement.parentElement.remove();
+    e.target.closest('tr').remove();
   }
 });
